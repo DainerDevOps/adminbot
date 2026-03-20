@@ -6,10 +6,10 @@ export const getAllUsuarios = async () => {
 };
 
 export const createUsuario = async (usuario) => {
-  const { id, nombres, apellidos, correo, telefono } = usuario;
+  const { nombres, apellidos, correo, telefono } = usuario;
 
   await database.query(
-    "INSERT INTO usuarios (id, nombres, apellidos, correo, telefono) VALUES (?, ?, ?, ?, ?)",
-    [id, nombres, apellidos, correo, telefono],
+    "INSERT INTO usuarios ( nombres, apellidos, correo, telefono) VALUES (?, ?, ?, ?)",
+    [ nombres, apellidos, correo, telefono],
   );
 };
