@@ -1,44 +1,43 @@
 import { getAllUsuarios, createUsuario } from "../models/usuarioModel.js";
-import { randomUUID } from "crypto";
 
+// 🔹 GET - Obtener todos los usuarios
 export const getUsuarios = async (req, res) => {
   try {
     const data = await getAllUsuarios();
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
-    res.status(500).json(error);
+    console.log("❌ ERROR GET:", error);
+    res.status(500).json({ message: "Error al obtener usuarios" });
   }
 };
 
-// export const createNewUsuario = async (req, res) => {
-//   try {
-//     const newUsuario = {
-//       id: randomUUID(),
-//       ...req.body,
-//     };
-
-//     await createUsuario(newUsuario);
-
-//     res.status(201).json({ message: "Usuario creado" });
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// };
-
+// 🔹 POST - Crear nuevo usuario
 export const createNewUsuario = async (req, res) => {
   try {
     console.log("🔥 CONTROLLER FUNCIONANDO");
     console.log("📥 Datos recibidos:", req.body);
 
+    // 🔸 Validación básica
+    const { nombres, apellidos, correo, telefono } = req.body;
+
+    if (!nombres || !apellidos || !correo || !telefono) {
+      return res.status(400).json({
+        message: "Todos los campos son obligatorios",
+      });
+    }
+
     const newUsuario = {
-      ...req.body,
+      nombres,
+      apellidos,
+      correo,
+      telefono,
     };
 
     await createUsuario(newUsuario);
 
-    res.status(201).json({ message: "Usuario creado" });
+    res.status(201).json({ message: "Usuario creado correctamente" });
   } catch (error) {
-    console.log("❌ ERROR:", error);
-    res.status(500).json(error);
+    console.log("❌ ERROR POST:", error);
+    res.status(500).json({ message: "Error al crear usuario" });
   }
 };

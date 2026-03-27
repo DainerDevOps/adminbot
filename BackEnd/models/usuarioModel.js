@@ -9,7 +9,7 @@ export const createUsuario = async (usuario) => {
   const { nombres, apellidos, correo, telefono } = usuario;
 
   await database.query(
-    "INSERT INTO usuarios ( nombres, apellidos, correo, telefono) VALUES (?, ?, ?, ?)",
-    [ nombres, apellidos, correo, telefono],
+    "INSERT INTO usuarios (nombres, apellidos, correo, telefono) VALUES (?, ?, ?, ?)",
+    [nombres, apellidos, correo, telefono],
   );
 };
