@@ -1,0 +1,10 @@
+/* @import './global.css';
+@import './layout.css';
+@import './reset.css';
+@import './variables.css'; */
+
+:root {
+    --background: #000000 ;
+    --text: #fffffff;
+    --primary: ;
+}

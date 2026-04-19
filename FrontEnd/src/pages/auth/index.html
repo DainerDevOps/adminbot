@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - AdminBot</title>
+
+    <link rel="stylesheet" href="../../shared/css/reset.css" />
+    <link rel="stylesheet" href="../../shared/css/global.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <main class="auth-container">
+  
+      <section class="auth-image">
+        <img
+          src="image.background.jpg"
+          alt="background"
+        />
+      </section>
+
+
+      <section class="auth-form">
+        <h1>AdminBot</h1>
+        <p>Inicia sesión en tu cuenta</p>
+
+        <form id="loginForm">
+          <label>
+            Email
+            <input type="email" id="email" placeholder="Ingresa tu correo" />
+          </label>
+
+          <label>
+            Contraseña
+            <input type="password" id="password" placeholder="••••••••" />
+          </label>
+
+          <button id="button-primary" type="submit">Ingresar</button>
+        </form>
+
+        <span class="forgot">¿Olvidaste tu contraseña?</span>
+      </section>
+    </main>
+
+    <script src="./auth.js"></script>
+  </body>
+</html>
