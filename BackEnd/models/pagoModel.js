@@ -1,15 +1,15 @@
 import database from "../config/database.js";
 
 export const getAllPagos = async () => {
-  const [rows] = await database.query("SELECT * FROM pagos");
+  const [rows] = await database.query("SELECT * FROM payments");
   return rows;
 };
 
 export const createPago = async (pago) => {
-  const { id, cuenta_por_cobrar_id, valor_pagado, metodo_pago } = pago;
+  const { id, account_receivable_id, amount_paid, payment_method } = pago;
 
   await database.query(
-    "INSERT INTO pagos (id, cuenta_por_cobrar_id, valor_pagado, metodo_pago) VALUES (?, ?, ?, ?)",
-    [id, cuenta_por_cobrar_id, valor_pagado, metodo_pago],
+    "INSERT INTO payments (id, account_receivable_id, amount_paid, payment_method) VALUES (?, ?, ?, ?)",
+    [id, account_receivable_id, amount_paid, payment_method],
   );
 };
