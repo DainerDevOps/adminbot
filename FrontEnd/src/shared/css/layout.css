@@ -1,0 +1,591 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap");
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --bg: #f4f1fb;
+  --bg-2: #ece8f6;
+  --panel-bg: #ffffff;
+  --panel-soft: rgba(255, 255, 255, 0.75);
+  --sidebar-bg: #ffffff;
+
+  /* Pastel accents */
+  --accent-color: #8b5cf6;
+  --accent-soft: rgba(139, 92, 246, 0.1);
+  --accent-glow: rgba(139, 92, 246, 0.2);
+
+  --lavender: #c4b5fd;
+  --rose: #fda4af;
+  --mint: #86efac;
+  --peach: #fdba74;
+  --sky: #93c5fd;
+
+  /* Semantic colors */
+  --success-color: #22c55e;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+
+  --success-soft: rgba(34, 197, 94, 0.1);
+  --warning-soft: rgba(245, 158, 11, 0.1);
+  --danger-soft: rgba(239, 68, 68, 0.1);
+
+  /* Text */
+  --text-primary: #1e1b2e;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+
+  /* Borders & shadows */
+  --border-color: rgba(139, 92, 246, 0.12);
+  --border-soft: rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 2px 8px rgba(139, 92, 246, 0.07);
+  --shadow-md: 0 6px 24px rgba(139, 92, 246, 0.11);
+  --shadow-lg: 0 16px 48px rgba(139, 92, 246, 0.14);
+
+  --sidebar-width: 260px;
+  --header-h: 72px;
+  --radius: 18px;
+  --radius-sm: 10px;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── App shell ──────────────────────────────────────────────── */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  box-shadow: 2px 0 20px rgba(139, 92, 246, 0.06);
+  z-index: 100;
+}
+
+/* Subtle top gradient accent */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lavender), var(--rose), var(--sky));
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 24px 22px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    var(--lavender) 100%
+  );
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.logo-icon::after {
+  content: "✦";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.sidebar-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+/* ─── Sidebar nav ────────────────────────────────────────────── */
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.15s ease;
+  position: relative;
+}
+
+.nav-item span {
+  font-size: 1.1rem;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.nav-item:hover {
+  background: var(--accent-soft);
+  color: var(--accent-color);
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: linear-gradient(
+    135deg,
+    var(--accent-soft) 0%,
+    rgba(196, 181, 253, 0.15) 100%
+  );
+  color: var(--accent-color);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  border-radius: 0 4px 4px 0;
+  background: var(--accent-color);
+}
+
+/* ─── Sidebar footer ─────────────────────────────────────────── */
+.sidebar-footer {
+  padding: 16px 14px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* ─── Main layout ────────────────────────────────────────────── */
+.main-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0;
+}
+
+/* ─── Top header ─────────────────────────────────────────────── */
+.top-header {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow:
+    0 1px 0 var(--border-color),
+    var(--shadow-sm);
+}
+
+.top-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-soft);
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border-color);
+}
+
+.user-profile span {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+/* ─── Content body ───────────────────────────────────────────── */
+.content-body {
+  flex: 1;
+  padding: 32px;
+  background: var(--bg);
+  overflow-y: auto;
+}
+
+/* Subtle grid pattern on bg */
+.content-body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.content-body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Card ───────────────────────────────────────────────────── */
+.card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  border: none;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    var(--lavender) 100%
+  );
+  color: #fff;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px var(--accent-glow);
+  filter: brightness(1.05);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent-color);
+  border: 1.5px solid var(--lavender);
+}
+.btn-outline:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-color);
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(139, 92, 246, 0.03);
+}
+
+td {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+tr:hover td {
+  background: var(--accent-soft);
+}
+
+/* ─── Status badges ──────────────────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.status-al-dia {
+  background: var(--success-soft);
+  color: var(--success-color);
+}
+.status-pendiente {
+  background: var(--warning-soft);
+  color: var(--warning-color);
+}
+.status-ausente {
+  background: var(--danger-soft);
+  color: var(--danger-color);
+}
+
+/* ─── Form controls ──────────────────────────────────────────── */
+input[type="date"],
+select,
+textarea {
+  background: var(--bg);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Toggle / switch ────────────────────────────────────────── */
+.toggle-status {
+  width: 44px;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 100px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.22s ease;
+  flex-shrink: 0;
+}
+.toggle-status::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px;
+  left: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.22s ease;
+}
+.toggle-status.active {
+  background: var(--success-color);
+}
+.toggle-status.active::after {
+  transform: translateX(20px);
+}
+
+/* ─── Stat value (shared) ────────────────────────────────────── */
+.stat-value {
+  font-size: 2.4rem;
+  font-weight: 800;
+  font-family: "Playfair Display", serif;
+  color: var(--text-primary);
+}
+
+/* ─── Alert card ─────────────────────────────────────────────── */
+.alert-card {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 20px 24px;
+}
+.alert-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.alert-info {
+  flex: 1;
+}
+.alert-info strong {
+  font-size: 0.96rem;
+  color: var(--text-primary);
+}
+.alert-info p {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+.alert-time {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ─── Payment item ───────────────────────────────────────────── */
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.payment-item:hover {
+  background: var(--accent-soft);
+}
+.payment-item + .payment-item {
+  border-top: 1px solid var(--border-color);
+}
+.amount {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--accent-color);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--lavender);
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+  .content-body {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 6px;
+  }
+  .nav-item {
+    flex: 1;
+    min-width: 100px;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+  .sidebar-footer {
+    width: 100%;
+    padding: 10px;
+  }
+  .top-header {
+    padding: 0 20px;
+  }
+  .content-body {
+    padding: 16px;
+  }
+}

@@ -1,38 +1,46 @@
 import { request } from "../../shared/js/api.js";
+import { guardarUsuario } from "../../shared/js/storage.js";
 import {
   validarCorreo,
-  limpiarError,
   mostrarError,
+  limpiarError,
 } from "../../shared/js/utils.js";
-import { guardarUsuario } from "../../shared/js/storage.js";
 
-const form = document.getElementById("loginForm");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const error = document.getElementById("error"); // ← esta también faltaba
+const form = document.querySelector(".login-form");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const errorMessage = document.getElementById("errorMessage");
 
-form.addEventListener("submit", async function (e) {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  limpiarError();
+  limpiarError(errorMessage);
 
-  const correo = email.value.trim();
-  const clave = password.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
 
-  if (!validarCorreo(correo)) {
-    mostrarError(error, "correo invalido ");
-    return;
+  if (!email || !password) {
+    return mostrarError(errorMessage, "Datos incompletos");
   }
 
-  if (clave.length < 6) {
-    
-    mostrarError(error, "la contraseña debe tener minimo 6 caracteres");
-    return; 
+  if (!validarCorreo(email)) {
+    return mostrarError(errorMessage, "Correo inválido");
   }
 
   try {
-    await request("/login", { method: "POST" }); // ← ESTA es la línea clave
+    const data = await request("/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    if (data.ok) {
+      guardarUsuario(data.user);
+      window.location.href = "../dashboard/index.html";
+    }
   } catch (error) {
-    mostrarError(error, "Error en login");
+    mostrarError(errorMessage, error.message);
   }
 });

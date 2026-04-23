@@ -1,0 +1,170 @@
+<!--students/index.html-->
+
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AdminBot | Estudiantes</title>
+    <link rel="stylesheet" href="../../shared/css/layout.css" />
+    <style>
+      .table-container {
+        margin-top: 30px;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--panel-bg);
+        border-radius: 15px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+      th {
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+      }
+      .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .status-al-dia {
+        background: rgba(77, 255, 136, 0.1);
+        color: var(--success-color);
+      }
+      .status-pendiente {
+        background: rgba(255, 204, 77, 0.1);
+        color: var(--warning-color);
+      }
+      .status-ausente {
+        background: rgba(255, 77, 77, 0.1);
+        color: var(--danger-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar (Same as Dashboard) -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-icon"></div>
+          <h2>AdminBot</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="../dashboard/index.html" class="nav-item"
+            ><span>🏠</span> Dashboard</a
+          >
+          <a href="../students/index.html" class="nav-item active"
+            ><span>👥</span> Estudiantes</a
+          >
+          <a href="../attendance/index.html" class="nav-item"
+            ><span>📅</span> Asistencia</a
+          >
+          <a href="../payments/index.html" class="nav-item"
+            ><span>💰</span> Pagos</a
+          >
+          <a href="../alerts/index.html" class="nav-item"
+            ><span>🔔</span> Alertas</a
+          >
+          <a href="../settings/index.html" class="nav-item"
+            ><span>⚙️</span> Configuración</a
+          >
+        </nav>
+      </aside>
+
+      <div class="main-layout">
+        <header class="top-header">
+          <h1>Gestión de Estudiantes</h1>
+          <button class="btn btn-primary">+ Nuevo Estudiante</button>
+        </header>
+        <main class="content-body">
+          <div class="card table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Grado</th>
+                  <th>Acudiente</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Juan Pérez</td>
+                  <td>5º Grado</td>
+                  <td>María Pérez</td>
+                  <td>
+                    <span class="status-badge status-al-dia">Al día</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-outline"
+                      style="
+                        padding: 4px 8px;
+                        border-radius: 5px;
+                        font-size: 0.8rem;
+                      "
+                    >
+                      Editar
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ana García</td>
+                  <td>3º Grado</td>
+                  <td>José García</td>
+                  <td>
+                    <span class="status-badge status-pendiente">Pendiente</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-outline"
+                      style="
+                        padding: 4px 8px;
+                        border-radius: 5px;
+                        font-size: 0.8rem;
+                      "
+                    >
+                      Editar
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Luis Mora</td>
+                  <td>4º Grado</td>
+                  <td>Elena Mora</td>
+                  <td>
+                    <span class="status-badge status-ausente">Ausente</span>
+                  </td>
+                  <td>
+                    <button
+                      class="btn-outline"
+                      style="
+                        padding: 4px 8px;
+                        border-radius: 5px;
+                        font-size: 0.8rem;
+                      "
+                    >
+                      Editar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

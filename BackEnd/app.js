@@ -1,8 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
-// import cors from "cors"
+import cors from "cors"
 
-// app.use(cors());
 
 import studentRoutes from "./routes/students.route.js";
 import acudienteRoutes from "./routes/acudientes.route.js";
@@ -12,9 +11,11 @@ import asistenciaRoutes from "./routes/asistencias.route.js";
 import notificacionRoutes from "./routes/notificaciones.route.js";
 import authRoutes from "./routes/auth.route.js"
 import dashboardRoutes from "./routes/dashboard.route.js"
+
 const app = express();
 
-app.use(express.json());
+app.use(cors());
+app.use(express.json()); //
 
 const PORT = 3000
 

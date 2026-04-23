@@ -1,0 +1,182 @@
+/* ─── Stats Grid ─────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(139, 92, 246, 0.15);
+}
+
+/* Pastel color tints per card */
+.stat-card:nth-child(1) {
+  background: linear-gradient(145deg, #fff 60%, rgba(196, 181, 253, 0.2));
+}
+.stat-card:nth-child(2) {
+  background: linear-gradient(145deg, #fff 60%, rgba(253, 164, 175, 0.2));
+}
+.stat-card:nth-child(3) {
+  background: linear-gradient(145deg, #fff 60%, rgba(134, 239, 172, 0.2));
+}
+.stat-card:nth-child(4) {
+  background: linear-gradient(145deg, #fff 60%, rgba(253, 186, 116, 0.2));
+}
+
+/* Decorative blob per card */
+.stat-card::after {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  bottom: -20px;
+  right: -20px;
+  opacity: 0.18;
+}
+.stat-card:nth-child(1)::after {
+  background: #8b5cf6;
+}
+.stat-card:nth-child(2)::after {
+  background: #f43f5e;
+}
+.stat-card:nth-child(3)::after {
+  background: #22c55e;
+}
+.stat-card:nth-child(4)::after {
+  background: #f59e0b;
+}
+
+.stat-card h3 {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* Stat value — pastel gradient per card */
+.stat-value {
+  font-size: 2.6rem !important;
+  font-weight: 800 !important;
+  line-height: 1;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-card:nth-child(1) .stat-value {
+  background-image: linear-gradient(135deg, #8b5cf6, #c4b5fd);
+}
+.stat-card:nth-child(2) .stat-value {
+  background-image: linear-gradient(135deg, #f43f5e, #fda4af);
+}
+.stat-card:nth-child(3) .stat-value {
+  background-image: linear-gradient(135deg, #16a34a, #86efac);
+}
+.stat-card:nth-child(4) .stat-value {
+  background-image: linear-gradient(135deg, #d97706, #fdba74);
+}
+
+/* Stat card top bar */
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+}
+.stat-card:nth-child(1)::before {
+  background: linear-gradient(90deg, #8b5cf6, #c4b5fd);
+}
+.stat-card:nth-child(2)::before {
+  background: linear-gradient(90deg, #f43f5e, #fda4af);
+}
+.stat-card:nth-child(3)::before {
+  background: linear-gradient(90deg, #16a34a, #86efac);
+}
+.stat-card:nth-child(4)::before {
+  background: linear-gradient(90deg, #d97706, #fdba74);
+}
+
+/* ─── Charts section ─────────────────────────────────────────── */
+.charts-section {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  animation: fadeUp 0.5s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.charts-section .card {
+  padding: 28px;
+}
+
+.charts-section h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 22px;
+}
+
+canvas {
+  max-height: 280px;
+}
+
+/* Chart.js overrides for pastel theme */
+.chart-wrapper {
+  position: relative;
+}
+
+/* ─── Welcome header ─────────────────────────────────────────── */
+#welcome-message {
+  font-size: 1.5rem !important;
+}
+
+/* ─── Animations ─────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .charts-section {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .stat-value {
+    font-size: 2rem !important;
+  }
+  .stat-card {
+    padding: 20px;
+  }
+}
