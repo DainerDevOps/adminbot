@@ -11,7 +11,7 @@ import asistenciaRoutes from "./routes/asistencias.route.js";
 import notificacionRoutes from "./routes/notificaciones.route.js";
 import authRoutes from "./routes/auth.route.js"
 import dashboardRoutes from "./routes/dashboard.route.js"
-import whatsappRoutes from "./modules/whatsapp/whatsapp.routes.js"
+import whatsappRoutes from "./modules/whatsapp/whatsapp.router.js"
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use("/api", asistenciaRoutes);
 app.use("/api", notificacionRoutes);
 app.use("/api", authRoutes);
 app.use("/api", dashboardRoutes);
-app.use("/api", whatsappRoutes)
+app.use("/api/whatsapp", whatsappRoutes)
 
 app.get("/", (req, res)=>{
     res.send("Api funcionando")

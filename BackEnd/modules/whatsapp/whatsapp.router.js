@@ -1,7 +1,7 @@
-import Routes from "express";
+import express from "express";
 import { sendMessage } from "./whatsapp.controller.js";
 
-const router = Routes();
+const router = express.Router();
 
 router.post("/send", sendMessage);
 
