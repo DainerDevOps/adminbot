@@ -5,6 +5,8 @@ import {
   mostrarError,
   limpiarError,
 } from "../../shared/js/utils.js";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const form = document.querySelector(".login-form");
 const emailInput = document.getElementById("email");
@@ -37,8 +39,25 @@ form.addEventListener("submit", async (e) => {
     });
 
     if (data.ok) {
+      Toastify({
+        text: "Login exitoso!",
+        duration: 4000,
+        destination: "https://github.com/apvarun/toastify-js",
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "rigth", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        onClick: function () {}, // Callback after click
+      }).showToast();
       guardarUsuario(data.user);
-      window.location.href = "../dashboard/index.html";
+
+      setTimeout(() => {
+        window.location.href = "../dashboard/index.html";
+      }, 2000);
     }
   } catch (error) {
     mostrarError(errorMessage, error.message);

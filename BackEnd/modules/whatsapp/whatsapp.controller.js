@@ -1,10 +1,10 @@
 import { sendWhatsappMessage } from "./whatsapp.services.js";
 
 export const sendMessage = async (req, res) => {
-  const { phone } = req.body;
+  const { phone, message } = req.body;
 
   try {
-    const data = await sendWhatsappMessage(phone);
+    const data = await sendWhatsappMessage(phone, message);
 
     return res.status(200).json({
       ok: true,

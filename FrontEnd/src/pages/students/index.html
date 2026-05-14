@@ -1,60 +1,19 @@
-<!--students/index.html-->
-
-
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AdminBot | Estudiantes</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <link rel="stylesheet" href="../../shared/css/layout.css" />
-    <style>
-      .table-container {
-        margin-top: 30px;
-        overflow-x: auto;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        background: var(--panel-bg);
-        border-radius: 15px;
-        overflow: hidden;
-      }
-      th,
-      td {
-        padding: 16px;
-        text-align: left;
-        border-bottom: 1px solid var(--border-color);
-      }
-      th {
-        color: var(--text-secondary);
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-      }
-      .status-badge {
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-      .status-al-dia {
-        background: rgba(77, 255, 136, 0.1);
-        color: var(--success-color);
-      }
-      .status-pendiente {
-        background: rgba(255, 204, 77, 0.1);
-        color: var(--warning-color);
-      }
-      .status-ausente {
-        background: rgba(255, 77, 77, 0.1);
-        color: var(--danger-color);
-      }
-    </style>
+    <link rel="stylesheet" href="./students.css" />
   </head>
   <body>
     <div class="app-container">
-      <!-- Sidebar (Same as Dashboard) -->
+      <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar-header">
           <div class="logo-icon"></div>
@@ -85,86 +44,224 @@
       <div class="main-layout">
         <header class="top-header">
           <h1>Gestión de Estudiantes</h1>
-          <button class="btn btn-primary">+ Nuevo Estudiante</button>
+          <button class="btn btn-primary" id="btnNewStudent">
+            + Nuevo Estudiante
+          </button>
         </header>
+
         <main class="content-body">
+          <!-- Search Bar -->
+          <div class="card search-card">
+            <div class="search-container">
+              <span class="search-icon">🔍</span>
+              <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="Buscar por código, nombre o apellido..."
+              />
+            </div>
+            <div class="search-info" id="searchInfo"></div>
+          </div>
+
+          <!-- Students Table -->
           <div class="card table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Grado</th>
-                  <th>Acudiente</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Juan Pérez</td>
-                  <td>5º Grado</td>
-                  <td>María Pérez</td>
-                  <td>
-                    <span class="status-badge status-al-dia">Al día</span>
-                  </td>
-                  <td>
-                    <button
-                      class="btn-outline"
-                      style="
-                        padding: 4px 8px;
-                        border-radius: 5px;
-                        font-size: 0.8rem;
-                      "
-                    >
-                      Editar
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ana García</td>
-                  <td>3º Grado</td>
-                  <td>José García</td>
-                  <td>
-                    <span class="status-badge status-pendiente">Pendiente</span>
-                  </td>
-                  <td>
-                    <button
-                      class="btn-outline"
-                      style="
-                        padding: 4px 8px;
-                        border-radius: 5px;
-                        font-size: 0.8rem;
-                      "
-                    >
-                      Editar
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Luis Mora</td>
-                  <td>4º Grado</td>
-                  <td>Elena Mora</td>
-                  <td>
-                    <span class="status-badge status-ausente">Ausente</span>
-                  </td>
-                  <td>
-                    <button
-                      class="btn-outline"
-                      style="
-                        padding: 4px 8px;
-                        border-radius: 5px;
-                        font-size: 0.8rem;
-                      "
-                    >
-                      Editar
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-header">
+              <h3>Estudiantes Registrados</h3>
+              <span class="student-count" id="studentCount">Total: 0</span>
+            </div>
+            <div class="table-wrapper">
+              <table id="studentsTable">
+                <thead>
+                  <tr>
+                    <th>ID Estudiante</th>
+                    <th>Nombre Completo</th>
+                    <th>Grado</th>
+                    <th>Documento</th>
+                    <th>Año Escolar</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsBody">
+                  <tr class="loading-row">
+                    <td colspan="7" class="loading-text">
+                      Cargando estudiantes...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none">
+              <p>
+                No se encontraron estudiantes. Crea uno nuevo para comenzar.
+              </p>
+            </div>
           </div>
         </main>
       </div>
     </div>
+
+    <!-- Modal para Nuevo Estudiante -->
+    <div id="modalNewStudent" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Registrar Nuevo Estudiante</h2>
+          <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+
+        <form id="formNewStudent" class="student-form">
+          <div class="form-group">
+            <label for="studentCode">Código de Estudiante *</label>
+            <input type="text" id="studentCode" name="student_code" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Nombre *</label>
+              <input type="text" id="firstName" name="first_name" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Apellido *</label>
+              <input type="text" id="lastName" name="last_name" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="documentType">Tipo de Documento *</label>
+              <select id="documentType" name="document_type" required>
+                <option value="">Seleccionar...</option>
+                <option value="CC">Cédula de Ciudadanía</option>
+                <option value="TI">Tarjeta de Identidad</option>
+                <option value="PA">Pasaporte</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="documentNumber">Número de Documento *</label>
+              <input
+                type="text"
+                id="documentNumber"
+                name="document_number"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="birthDate">Fecha de Nacimiento *</label>
+              <input type="date" id="birthDate" name="birth_date" required />
+            </div>
+            <div class="form-group">
+              <label for="grade">Grado *</label>
+              <input
+                type="text"
+                id="grade"
+                name="grade"
+                placeholder="Ej: 5º Grado"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Número WhatsApp *</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder="Ej: 573001112233"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="schoolYear">Año Escolar *</label>
+              <input
+                type="text"
+                id="schoolYear"
+                name="school_year"
+                placeholder="Ej: 2024"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="status">Estado *</label>
+              <select id="status" name="status" required>
+                <option value="">Seleccionar...</option>
+                <option value="active">Activo</option>
+                <option value="inactive">Inactivo</option>
+                <option value="suspended">Suspendido</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" id="btnCancel">
+              Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              Registrar Estudiante
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal WhatsApp -->
+    <div id="whatsappModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Enviar Mensaje WhatsApp</h2>
+
+          <button class="close-btn" id="closeWhatsappModal">&times;</button>
+        </div>
+
+        <div class="student-form">
+          <!-- Nombre -->
+          <div class="form-group">
+            <label>Estudiante</label>
+            <input type="text" id="whatsappStudentName" readonly />
+          </div>
+
+          <!-- Número -->
+          <div class="form-group">
+            <label>Número WhatsApp</label>
+            <input type="text" id="whatsappPhone" readonly />
+          </div>
+
+          <!-- Mensaje -->
+          <div class="form-group">
+            <label>Mensaje</label>
+
+            <textarea
+              id="whatsappMessage"
+              rows="6"
+              placeholder="Escribe el mensaje..."
+            ></textarea>
+          </div>
+
+          <!-- Botones -->
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-outline"
+              id="btnCancelWhatsapp"
+            >
+              Cancelar
+            </button>
+
+            <button type="button" class="btn btn-primary" id="btnSendWhatsapp">
+              Enviar WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toastify JS via CDN (evita problemas con import ES module) -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="module" src="./students.js"></script>
   </body>
 </html>

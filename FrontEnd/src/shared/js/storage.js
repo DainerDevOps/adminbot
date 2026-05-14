@@ -1,5 +1,6 @@
 export function guardarUsuario(usuario) {
   localStorage.setItem("usuario", JSON.stringify(usuario));
+  localStorage.setItem("auth", "true");
 }
 
 export function obtenerUsuario() {
@@ -8,4 +9,5 @@ export function obtenerUsuario() {
 
 export function cerrarSesion() {
   localStorage.removeItem("usuario");
+  localStorage.removeItem("auth");
 }

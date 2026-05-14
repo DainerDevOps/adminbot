@@ -1,18 +1,19 @@
 import axios from "axios";
 
-export const sendWhatsappMessage = async (phone) => {
+export const sendWhatsappMessage = async (phone, message) => {
   try {
     const url = `https://graph.facebook.com/v25.0/${process.env.PHONE_ID}/messages`;
 
+    // BODY QUE SE ENVÍA A META
     const body = {
       messaging_product: "whatsapp",
+
       to: phone,
-      type: "template",
-      template: {
-        name: "hello_world",
-        language: {
-          code: "en_US",
-        },
+
+      type: "text",
+
+      text: {
+        body: message,
       },
     };
 
@@ -21,7 +22,13 @@ export const sendWhatsappMessage = async (phone) => {
       "Content-Type": "application/json",
     };
 
-    const { data } = await axios.post(url, body, { headers });
+    console.log("📤 Enviando mensaje a:", phone);
+
+    console.log("📝 Mensaje:", message);
+
+    const { data } = await axios.post(url, body, {
+      headers,
+    });
 
     console.log("✅ Mensaje enviado:", data);
 

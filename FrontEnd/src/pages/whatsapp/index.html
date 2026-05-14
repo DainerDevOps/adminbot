@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enviar WhatsApp</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        background: #0f172a;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .card {
+        width: 400px;
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 12px;
+      }
+
+      input,
+      textarea,
+      button {
+        width: 100%;
+        margin-top: 10px;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+      }
+
+      button {
+        background: #22c55e;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      #response {
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <h2>Enviar WhatsApp</h2>
+
+      <input type="text" id="phone" placeholder="573001112233" />
+
+      <textarea id="message" placeholder="Escribe el mensaje..."></textarea>
+
+      <button id="sendBtn">Enviar mensaje</button>
+
+      <p id="response"></p>
+    </div>
+
+    <script type="module" src="./whatsapp.js"></script>
+  </body>
+</html>
