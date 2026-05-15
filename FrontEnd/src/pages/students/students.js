@@ -451,8 +451,12 @@ function closeWhatsappModal() {
 
 async function handleSendWhatsapp() {
   try {
-    const phone = document.getElementById("whatsappPhone").value;
+    let phone = document.getElementById("whatsappPhone").value.trim();
 
+    // Limpiar número
+    phone = phone.replace(/\s+/g, "");
+    phone = phone.replace("+", "");
+    phone = phone.replace(/-/g, "");
     const studentName = document.getElementById("whatsappStudentName").value;
 
     const message = document.getElementById("whatsappMessage").value;
@@ -482,12 +486,12 @@ async function handleSendWhatsapp() {
 
     console.log("📩 Respuesta WhatsApp:", data);
 
-    if (data.ok) {
+    if (data.ok && data.data?.messages?.length > 0) {
       showToast(`Mensaje enviado a ${studentName}`, "success");
 
       closeWhatsappModal();
     } else {
-      showToast(data.error || "No se pudo enviar", "error");
+      showToast("Meta no confirmó el envío", "error");
     }
   } catch (error) {
     console.error("❌ Error WhatsApp:", error);
